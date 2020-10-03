@@ -11,8 +11,8 @@ RUN apk update \
 	&& chmod +x /usr/local/bin/webproc \
 	&& apk del .build-deps
 #configure dnsmasq
-RUN mkdir -p /etc/default/ && mkdir -p /etc/dnsmasq
+RUN mkdir -p /etc/default/ 
 RUN echo -e "ENABLED=1\nIGNORE_RESOLVCONF=yes" > /etc/default/dnsmasq
-COPY dnsmasq.conf /etc/dnsmasq/dnsmasq.conf
+COPY dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf
 #run!
-ENTRYPOINT ["webproc","--config","/etc/dnsmasq/dnsmasq.conf","--","dnsmasq","--no-daemon"]
+ENTRYPOINT ["webproc","--config","/etc/dnsmasq.d/dnsmasq.conf","--","dnsmasq","--no-daemon"]
