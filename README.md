@@ -2,34 +2,23 @@
 
 dnsmasq in a docker container, configurable via a [simple web UI](https://github.com/jpillora/webproc)
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/jpillora/dnsmasq.svg)][dockerhub]
-[![Image Size](https://images.microbadger.com/badges/image/jpillora/dnsmasq.svg)][dockerhub]
+1. Docker build
 
-### Usage
+```
+docker build -t weratyr/dnsmasq .
+```
 
-1. Create a [`/opt/dnsmasq.conf`](http://oss.segetech.com/intra/srv/dnsmasq.conf) file on the Docker host
+1. Docker create volumes
 
-   ```ini
-   #dnsmasq config, for a complete example, see:
-   #  http://oss.segetech.com/intra/srv/dnsmasq.conf
-   #log all dns queries
-   log-queries
-   #dont use hosts nameservers
-   no-resolv
-   #use cloudflare as default nameservers, prefer 1^4
-   server=1.0.0.1
-   server=1.1.1.1
-   strict-order
-   #serve all .company queries using a specific nameserver
-   server=/company/10.0.0.1
-   #explicitly define host-ip mappings
-   address=/myhost.company/10.0.0.2
-   ```
+```
+docker volume create dnsmasq_log
+docker volume create dnsmasq_conf
+```
 
 1. Run the container
 
    ```
-   $ docker run --name dnsmasq -p 53:53/udp -p 5380:8080 -p 67:67/udp -p 68:68/udp -v dnsmasq_conf:/etc/dnsmasq/  jpillora/dnsmasq
+   $ docker run --name dnsmasq -p 53:53/udp -p 5380:8080 -p 67:67/udp -p 68:68/udp -v dnsmasq_conf:/etc/dnsmasq/ -v dnsmasq_log:/var/log/dnsmasq/  weratyr/dnsmasq
    ```
 
 1. Visit `http://<docker-host>:5380`, authenticate with `foo/bar` and you should see
