@@ -18,7 +18,7 @@ docker volume create dnsmasq_conf
 1. Run the container
 
    ```
-   $ docker run --name dnsmasq -p 53:53/udp -p 5380:8080 -p 67:67/udp -p 68:68/udp -v dnsmasq_conf:/etc/dnsmasq/ -v dnsmasq_log:/var/log/dnsmasq/  weratyr/dnsmasq
+   $ docker run --name dnsmasq -d -p 53:53/udp -p 5380:8080 -p 67:67/udp -p 68:68/udp -v dnsmasq_conf:/etc/dnsmasq/ -v dnsmasq_log:/var/log/dnsmasq/  weratyr/dnsmasq
    ```
 
 1. Visit `http://<docker-host>:5380`, authenticate with `foo/bar` and you should see
